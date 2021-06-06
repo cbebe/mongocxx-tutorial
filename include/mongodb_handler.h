@@ -9,6 +9,7 @@
 #include "mongocxx/client.hpp"
 #include "mongocxx/database.hpp"
 #include "mongocxx/uri.hpp"
+#include "SimpleJSON/json.hpp"
 
 #include "character_size.h"
 
@@ -86,6 +87,25 @@ namespace MongoTutorial
       }
 
       return false;
+    }
+
+    json::JSON GetAllDocuments()
+    {
+      mongocxx::collection collection = db[kCollectionName];
+      mongocxx::cursor cursor = collection.find({});
+
+      json::JSON result;
+      result["characters"] = json::Array();
+
+      if (cursor.begin() != cursor.end())
+      {
+        for (auto doc : cursor)
+        {
+          result["characters"].append(bsoncxx::to_json(doc));
+        }
+      }
+
+      return result;
     }
 
   private:
