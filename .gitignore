@@ -1,2 +1,4 @@
 .easycpp
 bin
+lib/served
+lib/SimpleJSON
