@@ -13,14 +13,17 @@ LIBRARIES	:= -lboost_system -lpthread -lcrypto \
 EXECUTABLE	:= main
 
 
-all: $(BIN)/$(EXECUTABLE)
+all: $(BIN) $(BIN)/$(EXECUTABLE)
 
-run: clean all
+run: all
 	clear
 	./$(BIN)/$(EXECUTABLE)
 
 $(BIN)/$(EXECUTABLE): $(SRC)
 	$(CXX) $(CXX_FLAGS) $(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)
+
+$(BIN):
+	mkdir -p $(BIN)
 
 clean:
 	-rm $(BIN)/*
